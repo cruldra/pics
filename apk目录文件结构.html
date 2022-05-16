@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apk目录文件结构</title> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="css/jquery.treegrid.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.treegrid.min.js"></script>
+    
+</head>
+
+<body>
+    <table class="tree table">
+        <thead>
+            <tr>
+                <td>文件/目录名</td>
+                <td>简介</td>
+                <td>详情</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="treegrid-1 expanded">
+                <td>assets</td>
+                <td>资源文件(图片、音频、数据库、网页、配置文件等),这个文件夹下不会被编译.</td>
+                <td>存放需要打包到APK的静态文件,该目录与res目录不同之处在于,assets目录支持任意深度的子目录,我们的开发者可以根据自己的需求来任意部署文件夹的架构,而且res目录下的文件会在.R文件中生成与其对应的资源ID,assets不会自动生成对应的id,访问的时候需要AssetManager类</td>
+            </tr>
+            <tr class="treegrid-2 treegrid-parent-1">
+                <td>*.csb</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="treegrid-3 treegrid-parent-1">
+                <td>*.plist</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="treegrid-4 treegrid-parent-1">
+                <td>*.luac</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="treegrid-5">
+                <td>res</td>
+                <td>资源文件,需要编译(布局)图片、图标、字符串、样式、颜色</td>
+                <td>res是resource的缩写,这个目录存放的东西是资源文件,存放这个文件夹下的所有文件都会和上文所说的,映射到Android工程中的.R文件中,生成对应的资源ID,访问的时候直接使用资源ID,即R.ID.FILENAME,res文件夹下可以包含多个文件夹;anim是存放动画文件的;drawable目录存放图形资源;layout目录存放布局文件;values目录存放一些特征值;colors.xml存放color的颜色值等等</td>
+            </tr>
+            <tr class="treegrid-6">
+                <td>META-INF</td>
+                <td>APK签名文件</td>
+                <td>保存应用程序的签名信息,签名信息可以验证APK文件的完整性.当AndroidSDK在打包APK文件时会计算APK包中的所有文件信息的完整性,并且把这些完整性保存到META-INF文件夹下,应用程序在安装的时候首先会更具META-INF文件夹教研APK的完整性.通过这种手段,我们就可以在一定程度上保证APK中的每一个文件不被篡改.以此来确保我们的APK应用程序不被恶意修改或者被病毒文件感染,这有利于确保Android应用的完整性和系统的安全性.META-INF目录中包含的文件有CERT.RSA,CERT.DSA,CERT.SF和MANIFEST.MF.其中CERT.RSA是开发者利用私钥对APK进行签名的签名文件,CERT.SF和MANIFEST.MF记录了文件中文件的SHA-1哈希值.</td>
+            </tr>
+            <tr class="treegrid-7 treegrid-parent-6">
+                <td>CERT.RSA</td>
+                <td></td>
+                <td>开发者利用私钥对APK进行签名的签名文件</td>
+            </tr>
+            <tr class="treegrid-8 treegrid-parent-6">
+                <td>CERT.DSA</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="treegrid-9 treegrid-parent-6">
+                <td>CERT.SF</td>
+                <td></td>
+                <td>记录了文件中文件的SHA-1哈希值</td>
+            </tr>
+            <tr class="treegrid-10 treegrid-parent-6">
+                <td>MANIFEST.MF</td>
+                <td></td>
+                <td>记录了文件中文件的SHA-1哈希值</td>
+            </tr>
+            <tr class="treegrid-11">
+                <td>lib</td>
+                <td>.so库,系统库,自己打包的库.有的把加密/token生成方式放在.so文件里</td>
+                <td>该目录用来存放应用程序所依赖的native库文件,native库一般是用C/C++进行编写的,这里的lib库可能包含4种不同类型,根据CPU型号的不同,我们大体可以分为ARM,ARM-v7a,MIPS,X86,分别对应着ARM架构,ARM-V7架构,MIPS架构和X86架构,这些so库在apk包中构成如下图:
+
+
+                    其中,不同的CPU架构对应着不同的目录,每个目录中可以存放非常多的对应版本的so库,而且这个目录的结构固定,用户只能按照这个目录来存放自己的so库.目前市场上使用的移动终端大多是基于ARM或者ARM-v7a架构的.从厂家上来分是有三种,arm,x86,MIPS,arm 系列是绝大多数手机上使用的,x86 主要是运用在平板上,而 MIPS ,我基本上就没见过.</td>
+            </tr>
+            <tr class="treegrid-12 treegrid-parent-11">
+                <td>*.so</td>
+                <td></td>
+                <td></td>             
+            </tr>
+            <tr class="treegrid-13">
+                <td>resources.arsc</td>
+                <td>资源加密(语言包)</td>
+                <td>用来记录资源文件和资源ID之间的映射关系,用来根据资源ID寻找资源.Android的开发是分模块的,res目录专门用来存放资源文件,当在代码中需要调用资源文件时,只需要调用方法"findviewbyid()"就可以得到资源文件,每当在res文件夹下放一个文件,aapt就会自动生成对应的ID保存在.R文件,我们调用这个ID就可以,但是只有这个ID还不够,.R文件只是保证编译程序不报错,实际上在程序运行时,系统要根据ID去寻找对应的资源路径,而resources.arsc文件就是用来记录这些ID和资源文件位置对应关系的文件.</td>             
+            </tr>
+            <tr class="treegrid-14">
+                <td>AndroidManifest.xml</td>
+                <td>清单文件(图标.界面.权限.入口).配置信息(关键),举例修改权限</td>
+                <td>这是Android应用程序的配置文件,是一个用来描述Android应用"整体咨询"的设定文件,简单的说,这相对于Android应用向Android系统的"自我介绍"配置文件,Android系统可以根据Androidmanifest.xml文件来完整的了解这个APK应用程序的咨询.不难想到,每个Android应用程序都必须包含一个Androidmanifest.xml文件,并且它的名字是固定的,是禁止修改的.</td>             
+            </tr>
+            <tr class="treegrid-15">
+                <td>classes.dex</td>
+                <td>源代码,虚拟机可执行文件</td>
+                <td>传统的Java程序,首先先把文件编译成class文件,字节码都保存在了class文件中,Java虚拟机可以通过解释且执行这些class文件.然而Dalvik虚拟机是在Java虚拟机进行了优化,执行的是Dalvik字节码,而这些Dalvik字节码就是由Java字节码转换而来的.一般来说,Android应用在打包的时候通过AndroidSDK中的dx工具将Java字节码转换为Dalvik字节码.Dx工具可以对多个class文件进行合并,重组和优化,通过这些操作,可以达到减小体积,缩短运行时间的目的.</td>             
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script>
+    $('.tree').treegrid();
+</script>
+
+</html>
