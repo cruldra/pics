@@ -1,0 +1,10 @@
+#!/bin/bash
+file1=$1
+file2=$2
+temp_file=$(mktemp)
+
+cp "$file1" "$temp_file"
+cp "$file2" "$file1"
+cp "$temp_file" "$file2"
+
+rm "$temp_file"
