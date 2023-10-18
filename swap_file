@@ -3,8 +3,24 @@ file1=$1
 file2=$2
 temp_file=$(mktemp)
 
+# 打印交换前的文件内容
+echo "交换前："
+echo "文件 $file1 的内容："
+cat "$file1"
+echo "文件 $file2 的内容："
+cat "$file2"
+
+# 交换文件内容
 cp "$file1" "$temp_file"
 cp "$file2" "$file1"
 cp "$temp_file" "$file2"
 
+# 删除临时文件
 rm "$temp_file"
+
+# 打印交换后的文件内容
+echo "交换后："
+echo "文件 $file1 的内容："
+cat "$file1"
+echo "文件 $file2 的内容："
+cat "$file2"
